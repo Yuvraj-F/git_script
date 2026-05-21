@@ -99,14 +99,14 @@ def get_contributor_data():
         commits_excld_berrnd += 1
     print(f"Commits excluding Bernd: {commits_excld_berrnd}\n")
 
+    display_bar(counts, x_label="Contributors", y_label="Number of Commits")
+    display_bar(counts[1:], x_label="Contributors", y_label="Number of Commits")
     display_bar([counts[0], commits_excld_berrnd], labels=["Bernd", "Others"], x_label="Contributors", y_label="Number of Commits")
 
 def get_commits_count():
     data = get_data(ARGS_COMMITS)
     print(f"Total commits: {len(data)}")
     return len(data)
-
-
 
 def graph_request(query):
     with open(str(ROOT_DIR / ".env"), "r") as f:
@@ -207,4 +207,6 @@ if __name__ == "__main__":
 
     # execute(args)
     
+    get_contributor_data()
     get_commit_data()
+    
