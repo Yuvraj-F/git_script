@@ -63,13 +63,15 @@ def display_stacked_bars(vals, labels=None, x_label=None, y_label=None):
         plt.show()
 
 def is_cached(args):
-    if not Path.exists(LAST_ARGS):
-        with open(LAST_ARGS, "w") as f:
-            json.dump(args, f)
+    LAST_ARGS.touch(exist_ok=True)
 
     with open(LAST_ARGS, "r") as f:
-        j = json.load(f)
-    
+        content = f.read()
+        if not content:
+            j = ""
+        else:
+            j = json.load(f)
+        
     if args != j:
         with open(LAST_ARGS, "w") as f:
             j = json.dump(args, f)
@@ -78,6 +80,7 @@ def is_cached(args):
         return True
 
 def get_data(args, cache=True):
+    OUTFILE.touch(exist_ok=True)
     if cache and (is_cached(args)):
         with open(OUTFILE, "r") as f:
             return json.load(f)
