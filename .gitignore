@@ -1,0 +1,5 @@
+*.txt
+.env
+cache.json
+/graphs
+__pycache__/
