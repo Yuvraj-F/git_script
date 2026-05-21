@@ -70,7 +70,7 @@ def is_cached(args):
         if not content:
             j = ""
         else:
-            j = json.load(f)
+            j = json.loads(content)
         
     if args != j:
         with open(LAST_ARGS, "w") as f:
@@ -83,7 +83,9 @@ def get_data(args, cache=True):
     OUTFILE.touch(exist_ok=True)
     if cache and (is_cached(args)):
         with open(OUTFILE, "r") as f:
-            return json.load(f)
+            content = f.read()
+            if content:
+                return json.loads(content)
     else:
         return execute(args, dump=cache)
 
